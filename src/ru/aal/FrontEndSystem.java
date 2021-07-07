@@ -12,12 +12,16 @@ public class FrontEndSystem {
         this.requestLeft = requestLeft;
     }
 
-    public synchronized void addRequest(Request request) throws InterruptedException {
-        while (requests.size() == 2) {
-            wait();
+    public synchronized void addRequest(Request request) {
+        try {
+            while (requests.size() == 2) {
+                wait();
+            }
+            requests.add(request);
+            System.out.printf("%s: %s отправлена в банк\n", request.getClientThreadName(), request);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
-        requests.add(request);
-        System.out.printf("%s: %s отправлена в банк\n", request.getClientThreadName(), request);
     }
 
     public synchronized Request getRequest() {

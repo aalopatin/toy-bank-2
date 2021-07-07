@@ -19,11 +19,7 @@ public class Client implements Runnable{
         RequestType type = RequestType.values()[random.nextInt(2)];
         Request request = new Request(Thread.currentThread().getName(), amount, type);
 
-        try {
-            frontEndSystem.addRequest(request);
-        } catch (InterruptedException e) {
-            System.out.println("Выполнение потока было прервано!");
-        }
+        frontEndSystem.addRequest(request);
 
     }
 }
